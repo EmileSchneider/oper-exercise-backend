@@ -12,6 +12,15 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class QuizSerialiser(serializers.ModelSerializer):
+
+    creator = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), default=serializers.CurrentUserDefault())
+
+    class Meta:
+        model = Quiz
+        fields = ['name', 'creator']
+
+
+class DetailedQuizSerialiser(serializers.ModelSerializer):
     creator = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
 
     questions = serializers.SerializerMethodField()
@@ -21,7 +30,7 @@ class QuizSerialiser(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_questions(self, obj):
-        return DetailedQuestionSerialiser(Question.objects.all(), many=True).data
+        return DetailedQuestionSerialiser(Question.objects.filter(quiz=obj.pk), many=True).data
 
 
 class AnswerSerialiser(serializers.ModelSerializer):
@@ -33,7 +42,7 @@ class AnswerSerialiser(serializers.ModelSerializer):
 class QuestionSerialiser(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = ['id', 'text']
+        fields = ['id', 'text', 'quiz']
 
 
 class DetailedQuestionSerialiser(serializers.ModelSerializer):

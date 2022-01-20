@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'rest_auth.registration',
     'invitations',
+    'rest_invitations',
+    'qaas'
 ]
 SITE_ID = 1
 
@@ -110,6 +112,13 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
+## email
+SERVER_EMAIL = 'throwaway921312@gmail.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'throwaway921312'
+EMAIL_HOST_PASSWORD = 'manyoufuckingsuck'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

@@ -20,5 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
-    path('invitations/', include('invitations.urls')),
+    path('', include('rest_invitations.urls')),
+    path('qaas/', include('qaas.urls'))
 ]

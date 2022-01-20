@@ -2,6 +2,14 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+class Creator(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class Participant(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
 class Quiz(models.Model):
     name = models.CharField(max_length=100)
     creator = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
@@ -15,7 +23,7 @@ class Question(models.Model):
     text = models.CharField(max_length=200)
 
     def __str__(self):
-        return self.text
+        return f"{self.quiz} {self.text}"
 
 
 class Answer(models.Model):
@@ -42,3 +50,9 @@ class AnswersGiven(models.Model):
 
     def __str__(self):
         return str(self.participation) + " " + str(self.question) + " " + str(self.selectedAnswer)
+
+
+class QuizInvitations(models.Model):
+    email = models.EmailField()
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    accepted = models.BooleanField(default=False)
